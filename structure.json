@@ -1,7 +1,9 @@
 {
   "units:CUnit(id)": {
-    "parent": "SC2Link",
-    "race:Race": "SC2Link",
+    "parent": "SC2LinkUnit",
+    "race:Race": "SC2LinkRace",
+    "family:EditorCategories": "SC2EditorObjectFamily",
+    "Type:EditorCategories": "SC2EditorObjectType",
     "CargoSize" : "Number",
     "Speed" : "Number",
     "Sight" : "Number",
@@ -20,14 +22,14 @@
     "behaviors:BehaviorArray": [{"Link": "String"}],
     "weapons:WeaponArray" : [{"Link": "String"}],
     "abilities:AbilArray" : [{"Link": "String"}],
-    "card:CardLayouts": [{"LayoutButtons": [{"Face": "SC2Link", "Row": "Number", "Column": "Number"}]}]
+    "card:CardLayouts": [{"LayoutButtons": [{"Face": "SC2LinkButton", "Row": "Number", "Column": "Number"}]}]
   },
   "actors:CActorUnit,CActorMissile(id)": {
-    "parent": "SC2Link",
+    "parent": "SC2LinkActor",
     "LifeArmorIcon": "SC2Icon",
     "ShieldArmorIcon": "SC2Icon",
     "race:EditorCategories": "SC2EditorRace",
-    "unit:unitName": "SC2Link",
+    "unit:unitName": "SC2LinkUnit",
     "icon:UnitIcon": "SC2Icon",
     "wireframe:Wireframe.Image": "SC2Icon",
     "events:On": [{"Terms": "String", "Send": "String"}]
@@ -38,67 +40,68 @@
     "color:MiniMapBorderColor": "SC2Color"
   },
   "buttons:CButton(id)": {
-    "parent": "SC2Link",
+    "parent": "SC2LinkButton",
     "race:Race": "SC2EditorRace",
     "icon:Icon": "SC2Icon"
   },
   "upgrades:CUpgrade(id)": {
-    "parent": "SC2Link",
-    "race:Race": "SC2Link",
+    "parent": "SC2LinkUpgrade",
+    "race:Race": "SC2LinkRace",
     "icon:Icon": "SC2Icon"
   },
   "behaviors:CBehaviorBuff(id)": {
-    "parent": "SC2Link",
+    "parent": "SC2LinkBehavior",
     "race:Race": "SC2EditorRace",
     "icon:InfoIcon": "SC2Icon"
   },
    "scores:CScoreValueCustom(id)": {
-       "parent": "SC2Link",
+       "parent": "SC2LinkScore",
        "race:Race": "SC2EditorRace"
    },
    "weapons:CWeaponLegacy(id)|CWeaponStrafe(id)": {
-       "parent": "SC2Link",
+       "parent": "SC2LinkWeapon",
        "race:Race": "SC2EditorRace",
        "icon:Icon": "SC2Icon",
-       "DisplayEffect": "SC2Link",
+       "DisplayEffect": "SC2LinkEffect",
        "DisplayAttackCount": "Number",
        "Range": "Number",
        "Period": "Number",
-       "Effect": "SC2Link"
+       "Effect": "SC2LinkEffect"
    },
   "abilities:CAbilMerge(id)": {
-    "parent": "SC2Link",
+    "parent": "SC2LinkAbility",
     "race:Race": "SC2EditorRace",
-    "button:CmdButtonArray{index=WithTarget}.DefaultButtonFace": "SC2Link"
+    "button:CmdButtonArray{index=WithTarget}.DefaultButtonFace": "SC2LinkButton"
   },
   "abilities:CAbilTransport(id)": {
-    "parent": "SC2Link",
+    "parent": "SC2LinkAbility",
     "race:Race": "SC2EditorRace",
-    "button:CmdButtonArray{index=Load}.DefaultButtonFace": "SC2Link"
+    "button:CmdButtonArray{index=Load}.DefaultButtonFace": "SC2LinkButton"
   },
   "abilities:CAbilBehavior(id)": {
-    "parent": "SC2Link",
+    "parent": "SC2LinkAbility",
     "race:Race": "SC2EditorRace",
-    "button:CmdButtonArray{index=On}.DefaultButtonFace": "SC2Link"
+    "button:CmdButtonArray{index=On}.DefaultButtonFace": "SC2LinkButton"
   },
   "abilities:CAbilAugment(id),CAbilEffectInstant(id),CAbilEffectTarget(id),CAbilMorph(id),CAbilMorphPlacement(id),CAbilRedirectInstant(id),CAbilRedirectTarget(id)" : {
-    "parent": "SC2Link",
+    "parent": "SC2LinkAbility",
     "race:Race": "SC2EditorRace",
-    "button:CmdButtonArray{index=Execute}.DefaultButtonFace": "SC2Link"
+    "button:CmdButtonArray{index=Execute}.DefaultButtonFace": "SC2LinkButton"
   },
   "abilities:CAbilArmMagazine(id),CAbilBuild(id),CAbilResearch(id),CAbilSpecialize(id),CAbilTrain(id),CAbilWarpTrain(id)" : {
-    "parent": "SC2Link",
+    "parent": "SC2LinkAbility",
     "race:Race": "SC2EditorRace",
     "info:InfoArray": {
       "Time": "Number",
-      "Unit": "SC2Link",
-      "Upgrade": "SC2Link",
-      "Effect": "SC2Link",
-      "button:Button.DefaultButtonFace": "SC2Link"
+      "Unit": "SC2LinkUnit",
+      "Upgrade": "SC2LinkUpgrade",
+      "Effect": "SC2LinkEffect",
+      "button:Button.DefaultButtonFace": "SC2LinkButton"
     }
   },
   "commanders:CUser{id=PlayerCommanders}.Instances(Id)":{
-    "icon:Image{Field.Id=Icon}.Image": "SC2Icon"
+    "icon:Image{Field.Id=Icon}.Image": "SC2Icon",
+    "race:GameLink{Field.Id=Race}.GameLink": "SC2LinkRace"
   },
   "CommanderType:CUser{id=CommanderType}.Instances": [{
     "id:Id": "String"
@@ -108,23 +111,24 @@
   }],
   "techFields:CUser{id=CommanderTech}.Fields(Id)": [{
     "id:Id": "String",
-    "Type": "SC2Link",
-    "Type:GameLinkType": "SC2Link",
-    "Type:UserType": "SC2Link",
+    "Type": "SC2LinkType",
+    "Type:GameLinkType": "SC2LinkType",
+    "Type:UserType": "SC2LinkType",
     "EditorColumn": "Number"
   }],
   "tech:CUser{id=CommanderTech}.Instances(Id)":[{
     "id:Id": "String",
     "ability:AbilCmd{Field.Id=ability}": "SC2AbilCmd",
-    "state:User{Field.Id=upgradelevel}.Instance": "SC2Link",
-    "commander:User{Field.Id=commander}.Instance": "SC2Link",
-    "prestige:User{Field.Id=prestige}.Instance": "SC2Link",
-    "unit:Unit{Field.Id=unit}.Unit": "SC2Link",
-    "level:Int{Field.Id=level}.Int": "SC2Link",
-    "upgrade:Upgrade{Field.Id=upgrade}.Upgrade": "SC2Link",
-    "behavior:GameLink{Field.Id=behavior}.GameLink": "SC2Link"
+    "state:User{Field.Id=state}.Instance": "SC2LinkUserState",
+    "tech:User{Field.Id=tech}.Instance": "SC2LinkUserTech",
+    "commander:User{Field.Id=commander}.Instance": "SC2LinkUserCommander",
+    "prestige:User{Field.Id=prestige}.Instance": "SC2LinkUserPrestige",
+    "unit:Unit{Field.Id=unit}.Unit": "SC2LinkUnit",
+    "level:Int{Field.Id=level}.Int": "SC2LinkUserLevel",
+    "upgrade:Upgrade{Field.Id=upgrade}.Upgrade": "SC2LinkUpgrade",
+    "behavior:GameLink{Field.Id=behavior}.GameLink": "SC2LinkBehavior"
   }],
   "prestiges:CUser{id=PlayerPrestige}.Instances(Id)": {
-    "button:GameLink{Field.Id=Icon}.GameLink": "SC2Icon"
+    "button:GameLink{Field.Id=Icon}.GameLink": "SC2LinkButton"
   }
 }
